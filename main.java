@@ -1,16 +1,9 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.Color;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
-import java.awt.BorderLayout;
 
-public class main
-{
+public class main {
    private static void createAndShowGUI() {
-      //JFrame.setDefaultLookAndFeelDecorated(true);
+      // JFrame.setDefaultLookAndFeelDecorated(true);
 
       JFrame frame = new JFrame("The Game of Life");
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,11 +32,10 @@ public class main
       frame.setVisible(true);
    }
 
-   public static void main(String[] args)
-   {
+   public static void main(String[] args) {
       javax.swing.SwingUtilities.invokeLater(new Runnable() {
          public void run() {
-               createAndShowGUI();
+            createAndShowGUI();
          }
       });
    }
