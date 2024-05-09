@@ -1,5 +1,6 @@
 package MainPanel;
 import panelRight.*;
+import panelLeft.*;
 
 import javax.swing.*;
 import java.awt.Color;
@@ -17,7 +18,7 @@ public class MainPanel extends JFrame{
       setSize(1280, 720);
       setLocationRelativeTo(null);
 
-      JPanel panelLeft = new JPanel();
+      JPanel panelLeft = new panelLeft(this);
       JPanel panelCenter = new JPanel();
       JPanel panelRight = new panelRight(this);
 
@@ -25,7 +26,6 @@ public class MainPanel extends JFrame{
       panelCenter.setBounds(panelLeft.getX() + panelLeft.getWidth(), 0, getWidth() / 2, getHeight());
       panelRight.setBounds(panelCenter.getX() + panelCenter.getWidth(), 0, getWidth() / 4, getHeight());
       
-      panelLeft.setBackground(Color.RED);
       panelCenter.setBackground(Color.GREEN);
 
       add(panelLeft);

@@ -34,6 +34,8 @@ public class panelRight extends JPanel {
         JButton[] buttons = new JButton[10];
         for (int i = 0; i < buttons.length; i++) {
             buttons[i] = new JButton("Item Name \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t 100");
+            // cancel the focus border
+            buttons[i].setFocusPainted(false);
             // Set font size
             buttons[i].setFont(new Font("Arial", Font.PLAIN, 15));
             buttons[i].setMargin(new Insets(0, 0, 0, 0));
