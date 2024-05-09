@@ -1,9 +1,7 @@
+import panelRight.*;
+
 import javax.swing.*;
 import java.awt.Color;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-
-import panelRight.*;
 
 public class main {
    private static void createAndShowGUI() {
