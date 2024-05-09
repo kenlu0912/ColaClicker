@@ -1,4 +1,5 @@
 package panelRight;
+import MainPanel.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,12 +12,16 @@ import java.awt.Image;
 import java.awt.Font;
 
 public class panelRight extends JPanel {
-    public panelRight(JFrame frame) {
+    private MainPanel window;
+
+    public panelRight(MainPanel w) {
+        this.window = w;
+
         // Initialize bounds for panelRight
-        int x = frame.getSize().width * 3 / 4;
+        int x = window.getSize().width * 3 / 4;
         int y = 0;
-        int width = frame.getSize().width / 4;
-        int height = frame.getSize().height;
+        int width = window.getSize().width / 4;
+        int height = window.getSize().height;
         setBounds(x, y, width, height);
 
         // Set the layout manager for panelRight to null
@@ -36,7 +41,7 @@ public class panelRight extends JPanel {
 
             try {
                 Image img = ImageIO
-                        .read(new File("/Users/ken/Documents/University/1122/Java/java_game_project/img/factory.png"));
+                        .read(new File("img/factory.png"));
                 // Scale the image to fit the button which width is 1/4 of the frame width
                 img = img.getScaledInstance(width / 4, height / buttons.length - 3, Image.SCALE_SMOOTH);
                 // Let image align to the left of the button
@@ -52,7 +57,8 @@ public class panelRight extends JPanel {
         // Add action listener to each button
         for (JButton button : buttons) {
             button.addActionListener((ActionEvent e) -> {
-                System.out.println("Button " + button.getText() + " clicked");
+                window.totalPoints[0]++;
+                System.out.println("Button " + button.getText() + " clicked, points:" + window.totalPoints[0]);
             });
         }
     }
