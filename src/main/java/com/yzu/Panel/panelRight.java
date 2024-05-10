@@ -1,5 +1,4 @@
-package Panels;
-import Panels.MainPanel;
+package com.yzu.Panel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,22 +12,18 @@ import java.io.IOException;
 import java.awt.Image;
 import java.awt.Font;
 
-public class RightPanel extends JPanel {
+public class panelRight extends JPanel {
     private MainPanel window;
 
-    public RightPanel(MainPanel w) {
+    public panelRight(MainPanel w) {
         this.window = w;
 
-        // set area
-        int sizeAdjustment = -14;
-        setSize(window.getWidth() - window.cp.getWidth() + sizeAdjustment, window.getHeight());
-        //setBounds(window.cp.getX() + window.cp.getWidth(), 0, window.getWidth() * 2 / 10, window.getHeight());
-        
         // Initialize bounds for panelRight
-        int x = window.cp.getWidth();
+        int x = window.getSize().width * 3 / 4;
         int y = 0;
-        int width = getWidth();
-        int height = getHeight();
+        int width = window.getSize().width / 4;
+        int height = window.getSize().height;
+        setBounds(x, y, width, height);
 
         // Set the layout manager for panelRight to null
         setLayout(null);
@@ -43,17 +38,14 @@ public class RightPanel extends JPanel {
             // cancel the focus border
             buttons[i].setFocusPainted(false);
 
-
-            //*  the reference of two labels
-            //*  Set the layout manager for each button to BorderLayout
-            //*  Warning: the label word could be cut off because of the area divide is not accurately
+            // * the reference of two labels
+            // * Set the layout manager for each button to BorderLayout
+            // * Warning: the label word could be cut off because of the area divide is not
+            // accurately
             buttons[i].setLayout(new BorderLayout());
             JLabel l = new JLabel("XXXXXXXXX");
             // add label to the right of the button[i]
             buttons[i].add(l, BorderLayout.EAST);
-
-
-
 
             // Set font size
             buttons[i].setFont(new Font("Arial", Font.PLAIN, 15));
@@ -62,7 +54,7 @@ public class RightPanel extends JPanel {
 
             try {
                 Image img = ImageIO
-                        .read(new File("img/factory.png"));
+                        .read(new File("src/main/resources/img/factory.png"));
                 // Scale the image to fit the button which width is 1/4 of the frame width
                 img = img.getScaledInstance(width / 4, height / buttons.length - 3, Image.SCALE_SMOOTH);
                 // Let image align to the left of the button
@@ -76,11 +68,10 @@ public class RightPanel extends JPanel {
         }
 
         // Add action listener to each button
-        for (JButton button : buttons) {
-            button.addActionListener((ActionEvent e) -> {
-                // Increase the total points which is in MainPanel by 1 when the button is clicked 
-                window.totalPoints[0]++;
-                System.out.println("Button " + button.getText() + " clicked, points:" + window.totalPoints[0]);
+        for (int i = 0; i < buttons.length; i++) {
+            final int j = i;
+            buttons[j].addActionListener((ActionEvent e) -> {
+                System.out.println("Button " + j + " clicked");
             });
         }
     }
