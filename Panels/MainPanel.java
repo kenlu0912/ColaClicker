@@ -3,6 +3,7 @@ import Panels.*;
 
 import javax.swing.*;
 import java.awt.Color;
+import java.awt.BorderLayout;
 
 public class MainPanel extends JFrame{
    public static int totalPoints[] = new int[100]; // each element is in the range 0-999
@@ -14,6 +15,7 @@ public class MainPanel extends JFrame{
    private MainPanel() {
       // set JFrame title
       setTitle("The Game of Life");
+      setLayout(new BorderLayout());
 
       // set default close operation
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
