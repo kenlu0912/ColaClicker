@@ -1,5 +1,5 @@
-package panelRight;
-import MainPanel.*;
+package Panels;
+import Panels.MainPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,17 +13,19 @@ import java.io.IOException;
 import java.awt.Image;
 import java.awt.Font;
 
-public class panelRight extends JPanel {
+public class RightPanel extends JPanel {
     private MainPanel window;
 
-    public panelRight(MainPanel w) {
+    public RightPanel(MainPanel w) {
         this.window = w;
 
+        // set area
+        setBounds(window.cp.getX() + window.cp.getWidth(), 0, window.getWidth() * 2 / 10, window.getHeight());
         // Initialize bounds for panelRight
-        int x = window.getSize().width * 3 / 4;
+        int x = window.getWidth() * 3 / 4;
         int y = 0;
-        int width = window.getSize().width / 4;
-        int height = window.getSize().height;
+        int width = window.getWidth() / 4;
+        int height = window.getHeight();
         setBounds(x, y, width, height);
 
         // Set the layout manager for panelRight to null
