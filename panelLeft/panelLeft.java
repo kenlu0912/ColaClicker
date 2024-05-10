@@ -14,6 +14,7 @@ public class panelLeft extends JPanel {
     public panelLeft(MainPanel w) {
         this.window = w;
 
+        setLayout(null);
         setBackground(Color.RED);
 
         try {
@@ -23,5 +24,14 @@ public class panelLeft extends JPanel {
         } catch (IOException ex) {
             System.out.println("Image not found");
         }
+
+        JPanel panel = new JPanel();
+        panel.setSize(100,100);
+        JButton button = new JButton("Button");
+        JButton button2 = new JButton("Button2");
+        panel.add(button);
+        panel.add(button2);
+        add(panel);
+        System.out.println("ObjCount in panelLeft.panel: " + panel.getComponentCount());
     }
 }

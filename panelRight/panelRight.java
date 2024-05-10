@@ -3,6 +3,8 @@ import MainPanel.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -36,6 +38,19 @@ public class panelRight extends JPanel {
             buttons[i] = new JButton("Item Name \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t 100");
             // cancel the focus border
             buttons[i].setFocusPainted(false);
+
+
+            //*  the reference of two labels
+            //*  Set the layout manager for each button to BorderLayout
+            //*  Warning: the label word could be cut off because of the area divide is not accurately
+            buttons[i].setLayout(new BorderLayout());
+            JLabel l = new JLabel("XXXXXXXXX");
+            // add label to the right of the button[i]
+            buttons[i].add(l, BorderLayout.EAST);
+
+
+
+
             // Set font size
             buttons[i].setFont(new Font("Arial", Font.PLAIN, 15));
             buttons[i].setMargin(new Insets(0, 0, 0, 0));
@@ -59,6 +74,7 @@ public class panelRight extends JPanel {
         // Add action listener to each button
         for (JButton button : buttons) {
             button.addActionListener((ActionEvent e) -> {
+                // Increase the total points which is in MainPanel by 1 when the button is clicked 
                 window.totalPoints[0]++;
                 System.out.println("Button " + button.getText() + " clicked, points:" + window.totalPoints[0]);
             });
