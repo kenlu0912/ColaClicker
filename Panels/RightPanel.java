@@ -20,13 +20,15 @@ public class RightPanel extends JPanel {
         this.window = w;
 
         // set area
-        setBounds(window.cp.getX() + window.cp.getWidth(), 0, window.getWidth() * 2 / 10, window.getHeight());
+        int sizeAdjustment = -14;
+        setSize(window.getWidth() - window.cp.getWidth() + sizeAdjustment, window.getHeight());
+        //setBounds(window.cp.getX() + window.cp.getWidth(), 0, window.getWidth() * 2 / 10, window.getHeight());
+        
         // Initialize bounds for panelRight
-        int x = window.getWidth() * 3 / 4;
+        int x = window.cp.getWidth();
         int y = 0;
-        int width = window.getWidth() / 4;
-        int height = window.getHeight();
-        setBounds(x, y, width, height);
+        int width = getWidth();
+        int height = getHeight();
 
         // Set the layout manager for panelRight to null
         setLayout(null);
