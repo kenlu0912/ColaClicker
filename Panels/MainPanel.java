@@ -1,6 +1,5 @@
-package MainPanel;
-import panelRight.*;
-import panelLeft.*;
+package Panels;
+import Panels.*;
 
 import javax.swing.*;
 import java.awt.Color;
@@ -8,9 +7,9 @@ import java.awt.Color;
 public class MainPanel extends JFrame{
    public static int totalPoints[] = new int[100]; // each element is in the range 0-999
    public static int totalPointsSize = 0; // save the points size
-   JPanel panelLeft;
-   JPanel panelCenter;
-   JPanel panelRight;
+   public JPanel lp;
+   public JPanel cp;
+   public JPanel rp;
 
    private MainPanel() {
       // set JFrame title
@@ -24,21 +23,14 @@ public class MainPanel extends JFrame{
       setLocationRelativeTo(null);
 
       // define the three areas of the frame
-      panelLeft = new panelLeft(this);
-      panelCenter = new JPanel();
-      panelRight = new panelRight(this);
-
-      // set the bounds of the three areas
-      panelLeft.setBounds(0, 0, getWidth() / 4, getHeight());
-      panelCenter.setBounds(panelLeft.getX() + panelLeft.getWidth(), 0, getWidth() / 2, getHeight());
-      panelRight.setBounds(panelCenter.getX() + panelCenter.getWidth(), 0, getWidth() / 4, getHeight());
-
-      panelCenter.setBackground(Color.GREEN);
+      lp = new LeftPanel(this);
+      cp = new CenterPanel(this);
+      rp = new RightPanel(this);
 
       // add the three areas to the frame
-      add(panelLeft);
-      add(panelCenter);
-      add(panelRight);
+      add(lp);
+      add(cp);
+      add(rp);
 
       // set the frame to fixed resizable and visible
       setResizable(false);
@@ -48,6 +40,6 @@ public class MainPanel extends JFrame{
 
    public static void main(String[] args)  throws InterruptedException{
       MainPanel window = new MainPanel();
-      System.out.println("ObjCount in panelLeft: " + window.panelLeft.getComponentCount());
+      System.out.println("ObjCount in panelLeft: " + window.lp.getComponentCount());
    }
 }
