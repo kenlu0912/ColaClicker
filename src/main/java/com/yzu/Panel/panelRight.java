@@ -54,7 +54,7 @@ public class panelRight extends JPanel {
 
             try {
                 Image img = ImageIO
-                        .read(new File("src/main/resources/img/factory.png"));
+                        .read(new File("java_game_project/src/main/resources/img/factory.png"));
                 // Scale the image to fit the button which width is 1/4 of the frame width
                 img = img.getScaledInstance(width / 4, height / buttons.length - 3, Image.SCALE_SMOOTH);
                 // Let image align to the left of the button
