@@ -1,12 +1,12 @@
 package com.yzu.Panel;
 
 import javax.swing.*;
-import java.awt.Color;
 import java.awt.BorderLayout;
 
 public class MainPanel extends JFrame {
     public static int totalPoints[] = new int[100]; // each element is in the range 0-999
     public static int totalPointsSize = 0; // save the points size
+    public static int ClickValue = 1;
     public static JPanel lp;
     public static JPanel cp;
     public static JPanel rp;

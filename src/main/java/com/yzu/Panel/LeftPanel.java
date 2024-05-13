@@ -3,7 +3,6 @@ package com.yzu.Panel;
 import com.yzu.objects.Cola;
 import javax.swing.*;
 import java.awt.Color;
-import java.awt.BorderLayout;
 
 public class LeftPanel extends JPanel {
     private MainPanel window;
