@@ -1,17 +1,7 @@
-package Panels;
-import Panels.MainPanel;
+package com.yzu.Panel;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.IOException;
-import java.awt.Image;
-import java.awt.Font;
 
 public class CenterPanel extends JPanel {
     private MainPanel window;
