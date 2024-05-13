@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -11,25 +12,32 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.Image;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
 
-public class panelRight extends JPanel {
+public class RightPanel extends JPanel {
     private MainPanel window;
 
-    public panelRight(MainPanel w) {
+    public RightPanel(MainPanel w) {
         this.window = w;
 
-        // Initialize bounds for panelRight
-        int x = window.getSize().width * 3 / 4;
-        int y = 0;
-        int width = window.getSize().width / 4;
-        int height = window.getSize().height;
-        setBounds(x, y, width, height);
+        // set area
+        int sizeAdjustment = -14;
+        setSize(window.getWidth() - window.cp.getWidth() + sizeAdjustment, window.getHeight());
+
+        // Get the range of panelRight
+        int x = window.cp.getWidth();
+        int width = getWidth();
+        int height = getHeight();
 
         // Set the layout manager for panelRight to null
         setLayout(null);
 
         // Set the background color of panelRight
         setBackground(Color.BLUE);
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridy = 0;
 
         // Add ten button and separate vertically equally
         JButton[] buttons = new JButton[10];
@@ -71,7 +79,9 @@ public class panelRight extends JPanel {
         for (int i = 0; i < buttons.length; i++) {
             final int j = i;
             buttons[j].addActionListener((ActionEvent e) -> {
-                System.out.println("Button " + j + " clicked");
+                // Increase the total points which is in MainPanel by 1 when the button is clicked 
+                window.totalPoints[j]++;
+                System.out.println("Button " + buttons[j].getText() + " clicked, id: " + j + ", points: " + window.totalPoints[j]);
             });
         }
     }
