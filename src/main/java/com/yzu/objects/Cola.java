@@ -1,7 +1,6 @@
 package com.yzu.objects;
 import com.yzu.Panel.LeftPanel;
 import com.yzu.Panel.MainPanel;
-import com.yzu.objects.PointsText;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,8 +37,18 @@ public class Cola extends JPanel{
             }
        
             public void mouseClicked(MouseEvent e) {
-                MainPanel.totalPoints[1] += MainPanel.ClickValue;
-                System.out.println("Clicked Cola: " + MainPanel.totalPoints[1]);
+                MainPanel.totalPoints[1]++;
+                //MainPanel.totalPoints[1] += MainPanel.ClickValue;
+                if(MainPanel.totalPoints[1] > 999){
+                    int i = 1;
+                    while(MainPanel.totalPoints[i] > 999){
+                        if(MainPanel.totalPointsSize < i + 1)
+                            MainPanel.totalPointsSize = i + 1;
+                        MainPanel.totalPoints[i + 1] += MainPanel.totalPoints[i] / 1000;
+                        MainPanel.totalPoints[i] %= 1000;
+                        i++;
+                    }
+                }
                 PointsText.UpdatePoints();
                 ZoomImg(100);
             }

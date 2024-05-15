@@ -5,9 +5,9 @@ import java.awt.BorderLayout;
 
 public class MainPanel extends JFrame {
     public static final String units[] = {"", "", "K", "M", "G", "T"};
-    public static int totalPoints[] = new int[101]; // each element is in the range 0-999
+    public static int totalPoints[] = new int[101]; // each element is in the range 0-999 start form [1 ~ 101]
     public static int totalPointsSize = 1; // save the points size
-    public static int ClickValue = 1;
+    public static int AutoClickValue = 0;
     public static JPanel lp;
     public static JPanel cp;
     public static JPanel rp;
