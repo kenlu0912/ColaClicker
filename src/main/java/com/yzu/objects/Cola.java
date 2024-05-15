@@ -1,6 +1,7 @@
 package com.yzu.objects;
 import com.yzu.Panel.LeftPanel;
 import com.yzu.Panel.MainPanel;
+import com.yzu.objects.PointsText;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +11,6 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import java.awt.event.*;
-import java.lang.Thread;
 
 public class Cola extends JPanel{
     private LeftPanel ColaWindow;
@@ -38,8 +38,9 @@ public class Cola extends JPanel{
             }
        
             public void mouseClicked(MouseEvent e) {
-                MainPanel.totalPointsSize += MainPanel.ClickValue;
-                System.out.println("Clicked Cola: " + MainPanel.totalPointsSize);
+                MainPanel.totalPoints[1] += MainPanel.ClickValue;
+                System.out.println("Clicked Cola: " + MainPanel.totalPoints[1]);
+                PointsText.UpdatePoints();
                 ZoomImg(100);
             }
         });

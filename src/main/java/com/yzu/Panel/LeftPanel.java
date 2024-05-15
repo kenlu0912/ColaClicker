@@ -1,6 +1,7 @@
 package com.yzu.Panel;
 
 import com.yzu.objects.Cola;
+import com.yzu.objects.PointsText;
 import javax.swing.*;
 import java.awt.Color;
 
@@ -16,6 +17,9 @@ public class LeftPanel extends JPanel {
 
         JPanel ColaPanel = new Cola(this);
         add(ColaPanel);
+
+        JPanel Points = new PointsText(this);
+        add(Points);
  
         setLayout(null);
         setBackground(Color.RED);
