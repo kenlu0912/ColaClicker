@@ -17,11 +17,17 @@ import java.awt.GridBagConstraints;
 public class RightPanel extends JPanel {
     private MainPanel window;
 
+    // An array to store the current item number
+    public static int[] itemNumber = new int[10];
+
+    // An array to store the current item price
+    public static int[] itemPrice = new int[10];
+
     public RightPanel(MainPanel w) {
         this.window = w;
 
         // set area
-        int sizeAdjustment = -14;
+        int sizeAdjustment = 0;
         setSize(window.getWidth() - window.cp.getWidth() + sizeAdjustment, window.getHeight());
 
         // Get the range of panelRight
@@ -39,10 +45,55 @@ public class RightPanel extends JPanel {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridy = 0;
 
+        // Add a label at the top of the panelRight
+        JLabel label = new JLabel();
+        label.setFont(new Font("Arial", Font.PLAIN, 20));
+        label.setBounds(x, 0, width, height / 10 - 3);
+
+        // Add four buttons into label
+        JButton[] buttonsInLabel = new JButton[4];
+        int []factorList = {1, 10, 100, 1000};
+        boolean []currentfactor = {true, false, false, false};
+        for (int i = 0; i < buttonsInLabel.length; i++) {
+            // Change factorList[i] to a string
+            buttonsInLabel[i] = new JButton(String.valueOf(factorList[i]));
+            buttonsInLabel[i].setBorderPainted(false);
+            buttonsInLabel[i].setBounds(x + i * width / 4, 0, width / 4, height / 10 - 3);
+            buttonsInLabel[i].setOpaque(false);
+            buttonsInLabel[i].setContentAreaFilled(false);
+            if (i == 0)
+                buttonsInLabel[i].setForeground(Color.YELLOW);
+            else
+                buttonsInLabel[i].setForeground(Color.BLACK);
+            add(buttonsInLabel[i]);
+        }
+
+        // If the button is clicked, the corresponding factor will be set to true
+        // The false item's Transparency will be set to 0.5
+        for (int i = 0; i < buttonsInLabel.length; i++) {
+            final int j = i;
+            buttonsInLabel[j].addActionListener((ActionEvent e) -> {
+                for (int k = 0; k < buttonsInLabel.length; k++) {
+                    if (k == j) {
+                        currentfactor[k] = true;
+                        buttonsInLabel[k].setForeground(Color.YELLOW);
+                    } else {
+                        currentfactor[k] = false;
+                        buttonsInLabel[k].setForeground(Color.BLACK);
+                    }
+                    System.out.print(currentfactor[k] + " ");
+                }
+                System.out.println();
+            });
+        }
+
+
+        add(label);
+
         // Add ten button and separate vertically equally
         JButton[] buttons = new JButton[10];
-        for (int i = 0; i < buttons.length; i++) {
-            buttons[i] = new JButton("Item Name \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t 100");
+        for (int i = 1; i < buttons.length; i++) {
+            buttons[i] = new JButton("Item Name");
             // cancel the focus border
             buttons[i].setFocusPainted(false);
 
@@ -51,7 +102,7 @@ public class RightPanel extends JPanel {
             // * Warning: the label word could be cut off because of the area divide is not
             // accurately
             buttons[i].setLayout(new BorderLayout());
-            JLabel l = new JLabel("XXXXXXXXX");
+            JLabel l = new JLabel("0");
             // add label to the right of the button[i]
             buttons[i].add(l, BorderLayout.EAST);
 
@@ -62,7 +113,7 @@ public class RightPanel extends JPanel {
 
             try {
                 Image img = ImageIO
-                        .read(new File("java_game_project/src/main/resources/img/factory.png"));
+                        .read(new File("src/main/resources/img/factory.png"));
                 // Scale the image to fit the button which width is 1/4 of the frame width
                 img = img.getScaledInstance(width / 4, height / buttons.length - 3, Image.SCALE_SMOOTH);
                 // Let image align to the left of the button
@@ -76,12 +127,32 @@ public class RightPanel extends JPanel {
         }
 
         // Add action listener to each button
-        for (int i = 0; i < buttons.length; i++) {
+        for (int i = 1; i < buttons.length; i++) {
             final int j = i;
             buttons[j].addActionListener((ActionEvent e) -> {
-                // Increase the total points which is in MainPanel by 1 when the button is clicked 
+                // Increase the total points which is in MainPanel by 1 when the button is
+                // clicked
                 window.totalPoints[j]++;
-                System.out.println("Button " + buttons[j].getText() + " clicked, id: " + j + ", points: " + window.totalPoints[j]);
+                System.out.println(
+                        "Button " + buttons[j].getText() + " clicked, id: " + j + ", points: " + window.totalPoints[j]);
+
+                int currentfactorInt = 0;
+                for (int k = 0; k < currentfactor.length; k++) {
+                    if (currentfactor[k]) {
+                        currentfactorInt = factorList[k];
+                    }
+                }
+
+                // Add the item number by currentfactorInt
+                itemNumber[j] += currentfactorInt;
+
+                // Random the array itemPrice
+                itemPrice[j] = (int) (Math.random() * 100);
+
+                // Update the JLabel text
+                JLabel labelInButton = (JLabel) buttons[j].getComponent(0);
+
+                labelInButton.setText(String.valueOf(currentfactorInt) + ", " + String.valueOf(itemPrice[j]) + ", " + String.valueOf(itemNumber[j]));
             });
         }
     }
