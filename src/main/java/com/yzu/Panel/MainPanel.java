@@ -4,8 +4,9 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 
 public class MainPanel extends JFrame {
-    public static int totalPoints[] = new int[100]; // each element is in the range 0-999
-    public static int totalPointsSize = 0; // save the points size
+    public static final String units[] = {"", "", "K", "M", "G", "T"};
+    public static int totalPoints[] = new int[101]; // each element is in the range 0-999
+    public static int totalPointsSize = 1; // save the points size
     public static int ClickValue = 1;
     public static JPanel lp;
     public static JPanel cp;
@@ -23,6 +24,11 @@ public class MainPanel extends JFrame {
         // set JFrame size and display it in the center of the screen
         setSize(1280, 720);
         setLocationRelativeTo(null);
+
+        // set the Point in saving File
+        /*totalPoints[5] = 863;
+        totalPoints[4] = 29;
+        totalPointsSize = 5;*/
 
         // define the three areas of the frame
         lp = new LeftPanel(this);
