@@ -25,7 +25,7 @@ public class Cola extends JPanel{
         this.ColaWindow = w;
 
         try {
-            ColaImg = ImageIO.read(new File("java_game_project/src/main/resources/img/cola.png"));
+            ColaImg = ImageIO.read(new File("src/main/resources/img/cola.png"));
             ImgWidth = g2dW = (int)(ColaImg.getWidth() * mag);
             ImgHeight = g2dH = (int)(ColaImg.getHeight() * mag);
         } catch (IOException ex) {
