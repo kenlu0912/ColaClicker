@@ -38,8 +38,7 @@ public class Cola extends JPanel{
             }
        
             public void mouseClicked(MouseEvent e) {
-                MainPanel.totalPoints[1] += MainPanel.ClickValue;
-                System.out.println("Clicked Cola: " + MainPanel.totalPoints[1]);
+                MainPanel.totalPoints[1] += 1;
                 PointsText.UpdatePoints();
                 ZoomImg(100);
             }

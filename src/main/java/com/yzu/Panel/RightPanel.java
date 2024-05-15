@@ -4,7 +4,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -12,7 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.Image;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
 
 public class RightPanel extends JPanel {
     private MainPanel window;
@@ -40,10 +38,6 @@ public class RightPanel extends JPanel {
 
         // Set the background color of panelRight
         setBackground(Color.BLUE);
-
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridy = 0;
 
         // Add a label at the top of the panelRight
         JLabel label = new JLabel();
@@ -132,9 +126,8 @@ public class RightPanel extends JPanel {
             buttons[j].addActionListener((ActionEvent e) -> {
                 // Increase the total points which is in MainPanel by 1 when the button is
                 // clicked
-                window.totalPoints[j]++;
                 System.out.println(
-                        "Button " + buttons[j].getText() + " clicked, id: " + j + ", points: " + window.totalPoints[j]);
+                        "Button " + buttons[j].getText() + " clicked, id: " + j);
 
                 int currentfactorInt = 0;
                 for (int k = 0; k < currentfactor.length; k++) {
