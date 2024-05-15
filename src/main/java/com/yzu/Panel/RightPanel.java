@@ -51,6 +51,7 @@ public class RightPanel extends JPanel {
         for (int i = 0; i < buttonsInLabel.length; i++) {
             // Change factorList[i] to a string
             buttonsInLabel[i] = new JButton(String.valueOf(factorList[i]));
+            buttonsInLabel[i].setFocusPainted(false);
             buttonsInLabel[i].setBorderPainted(false);
             buttonsInLabel[i].setBounds(x + i * width / 4, 0, width / 4, height / 10 - 3);
             buttonsInLabel[i].setOpaque(false);
