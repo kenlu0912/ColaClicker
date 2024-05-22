@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 
 public class MainPanel extends JFrame {
-    public static final String units[] = {"", "", "K", "M", "G", "T"};
+    public static final String units[] = {"", "", ",", "M", "G", "T"};
     public static int totalPoints[] = new int[101]; // each element is in the range 0-999 start form [1 ~ 101]
     public static int totalPointsSize = 1; // save the points size
     public static int AutoClickValue = 0;
@@ -41,7 +41,7 @@ public class MainPanel extends JFrame {
         add(rp);
 
         // set the frame to fixed resizable and visible
-        setResizable(false);
+        setResizable(true);
         setVisible(true);
     }
 }

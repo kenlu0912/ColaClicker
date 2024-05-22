@@ -1,6 +1,7 @@
 package com.yzu.Panel;
 
 import javax.imageio.ImageIO;
+import javax.naming.InitialContext;
 import javax.swing.*;
 
 import java.awt.BorderLayout;
@@ -11,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.Image;
 import java.awt.Font;
+import java.math.*;
 
 public class RightPanel extends JPanel {
     private MainPanel window;
@@ -18,8 +20,16 @@ public class RightPanel extends JPanel {
     // An array to store the current item number
     public static int[] itemNumber = new int[10];
 
-    // An array to store the current item price
-    public static int[] itemPrice = new int[10];
+    // An array to initial the first item price
+    // name: X, X, X, X, X, X, X, X, X, Joke
+    private static int[] InitialItemPrice = {0, 15, 100, 500, 3000, 10000, 40000, 200000, 1666666, 0};
+    // formula: InitialPrice * (IncRate ^ itemAvailable) = "next" item price
+    private static double IncreaseRate = 1.15f;
+    // An array to store the display item price
+    public static int[] displayItemPrice = new int[10];
+    // An array to store the item cliked times
+    public static int[] itemClickedTimes = new int[10];
+    public static String[] itemClickedTimesForJoke = new int[10];
 
     public RightPanel(MainPanel w) {
         this.window = w;
@@ -47,6 +57,7 @@ public class RightPanel extends JPanel {
         // Add four buttons into label
         JButton[] buttonsInLabel = new JButton[4];
         int []factorList = {1, 10, 100, 1000};
+        // which factor is selected
         boolean []currentfactor = {true, false, false, false};
         for (int i = 0; i < buttonsInLabel.length; i++) {
             // Change factorList[i] to a string
@@ -119,34 +130,43 @@ public class RightPanel extends JPanel {
             }
 
             add(buttons[i]);
+
+            // set the price and numvber of button
+            itemNumber[i] = 0;
+            displayItemPrice[i] = InitialItemPrice[i];
         }
 
         // Add action listener to each button
         for (int i = 1; i < buttons.length; i++) {
             final int j = i;
             buttons[j].addActionListener((ActionEvent e) -> {
-                // Increase the total points which is in MainPanel by 1 when the button is
-                // clicked
-                System.out.println(
-                        "Button " + buttons[j].getText() + " clicked, id: " + j);
-
                 int currentfactorInt = 0;
                 for (int k = 0; k < currentfactor.length; k++) {
                     if (currentfactor[k]) {
                         currentfactorInt = factorList[k];
                     }
                 }
+                
+                // Calculate the total consumption
+                double multiple = Math.pow(IncreaseRate, (double)itemNumber[j]);
+                int nextPrice = (int)((double)InitialItemPrice[j] * multiple);
+                int totalComsumption = nextPrice;
+                for(int amount = 2; amount <= currentfactorInt; amount++){
+                    multiple *= IncreaseRate; // available item number increase 1
+                    nextPrice = (int)((double)InitialItemPrice[j] * multiple);
+                    totalComsumption += nextPrice;
+                }
 
                 // Add the item number by currentfactorInt
                 itemNumber[j] += currentfactorInt;
 
-                // Random the array itemPrice
-                itemPrice[j] = (int) (Math.random() * 100);
+                // set the next itemPrice
+                displayItemPrice[j] = (int)((double)InitialItemPrice[j] * Math.pow(IncreaseRate, (double)itemNumber[j]));
 
                 // Update the JLabel text
                 JLabel labelInButton = (JLabel) buttons[j].getComponent(0);
 
-                labelInButton.setText(String.valueOf(currentfactorInt) + ", " + String.valueOf(itemPrice[j]) + ", " + String.valueOf(itemNumber[j]));
+                labelInButton.setText(String.valueOf(currentfactorInt) + ", " + String.valueOf(displayItemPrice[j]) + ", " + String.valueOf(itemNumber[j]));
             });
         }
     }
