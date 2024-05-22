@@ -30,16 +30,16 @@ public class RightPanel extends JPanel {
     // An array to store the item cliked times
     public static int[] itemClickedTimes = new int[10];
     public static String[] itemName = {"", "", "", "", "", "", "", "", "", "Joke"};
-    public static String[] itemDiscribe = {"", 
-                                           "", 
-                                           "", 
-                                           "", 
-                                           "", 
-                                           "", 
-                                           "", 
-                                           "", 
-                                           "", 
-                                           "This is a joke. Just like you."};
+    public static String[] itemDiscription = {"", 
+                                              "", 
+                                              "", 
+                                              "", 
+                                              "", 
+                                              "", 
+                                              "", 
+                                              "", 
+                                              "", 
+                                              "This is a joke. Just like you."};
 
     public RightPanel(MainPanel w) {
         this.window = w;
