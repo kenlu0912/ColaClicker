@@ -23,10 +23,15 @@ public class RightPanel extends JPanel {
     // An array to initial the first item price
     // name: X, X, X, X, X, X, X, X, X, Joke
     private static int[] InitialItemPrice = {0, 15, 100, 500, 3000, 10000, 40000, 200000, 1666666, 0};
+    
+    public static final int[] ItemAutoClickValue = {0, 1, 5, 20, 50, 100, 500, 3500, 8888, 123456, 0};
+    
     // formula: InitialPrice * (IncRate ^ itemAvailable) = "next" item price
-    private static double IncreaseRate = 1.15f;
+    // private static double IncreaseRate = 1.15f;
+
     // An array to store the display item price
-    public static int[] displayItemPrice = new int[10];
+    public static String[] displayItemPrice = new String[10];
+    public static BigInteger[] realItemPrice = new BigInteger[10];
     // An array to store the item cliked times
     public static int[] itemClickedTimes = new int[10];
     public static String[] itemName = {"", "", "", "", "", "", "", "", "", "Joke"};
@@ -40,6 +45,9 @@ public class RightPanel extends JPanel {
                                               "", 
                                               "", 
                                               "This is a joke. Just like you."};
+                        
+    // Add ten button and separate vertically equally
+    JButton[] buttons = new JButton[10];
 
     public RightPanel(MainPanel w) {
         this.window = w;
@@ -90,24 +98,32 @@ public class RightPanel extends JPanel {
             final int j = i;
             buttonsInLabel[j].addActionListener((ActionEvent e) -> {
                 for (int k = 0; k < buttonsInLabel.length; k++) {
+                    // Set the selected factor to true
                     if (k == j) {
                         currentfactor[k] = true;
                         buttonsInLabel[k].setForeground(Color.YELLOW);
+                        
+                        // Calculate the real price of each item and simplify the number to display
+                        for(int m = 1; m < 10; m++){
+                            realItemPrice[m] = calPrice(InitialItemPrice[m], itemNumber[m] + factorList[k] - 1).subtract(calPrice(InitialItemPrice[m], itemNumber[k] - 1));
+                            displayItemPrice[m] = simplifyNumber(realItemPrice[m]);
+                        }
+                        // set the simplified number to the label
+                        for(int m = 1; m < 10; m++){
+                            JLabel labelInButton = (JLabel) buttons[m].getComponent(0);
+                            labelInButton.setText(String.valueOf(factorList[k]) + ", " + displayItemPrice[m] + ", " + String.valueOf(itemNumber[m]));
+                        }
                     } else {
                         currentfactor[k] = false;
                         buttonsInLabel[k].setForeground(Color.BLACK);
                     }
-                    System.out.print(currentfactor[k] + " ");
                 }
-                System.out.println();
             });
         }
 
 
         add(label);
 
-        // Add ten button and separate vertically equally
-        JButton[] buttons = new JButton[10];
         for (int i = 1; i < buttons.length; i++) {
             buttons[i] = new JButton("Item Name");
             // cancel the focus border
@@ -115,8 +131,7 @@ public class RightPanel extends JPanel {
 
             // * the reference of two labels
             // * Set the layout manager for each button to BorderLayout
-            // * Warning: the label word could be cut off because of the area divide is not
-            // accurately
+            // * Warning: the label word could be cut off because of the area divide is not accurately
             buttons[i].setLayout(new BorderLayout());
             JLabel l = new JLabel("0");
             // add label to the right of the button[i]
@@ -141,9 +156,11 @@ public class RightPanel extends JPanel {
 
             add(buttons[i]);
 
-            // set the price and numvber of button
+            // initial the price and number
             itemNumber[i] = 0;
-            displayItemPrice[i] = InitialItemPrice[i];
+            realItemPrice[i] = new BigInteger(Integer.toString(InitialItemPrice[i]));
+            displayItemPrice[i] = simplifyNumber(realItemPrice[i]);
+            l.setText("1, " + displayItemPrice[i] + ", " + itemNumber[i]);
         }
 
         // Add action listener to each button
@@ -156,28 +173,70 @@ public class RightPanel extends JPanel {
                         currentfactorInt = factorList[k];
                     }
                 }
-                
-                // Calculate the total consumption
-                double multiple = Math.pow(IncreaseRate, (double)itemNumber[j]);
-                int nextPrice = (int)((double)InitialItemPrice[j] * multiple);
-                int totalComsumption = nextPrice;
-                for(int amount = 2; amount <= currentfactorInt; amount++){
-                    multiple *= IncreaseRate; // available item number increase 1
-                    nextPrice = (int)((double)InitialItemPrice[j] * multiple);
-                    totalComsumption += nextPrice;
-                }
 
+                // if can't be purchased
+                if(MainPanel.PlayerCola.compareTo(realItemPrice[j]) < 0)
+                    return;
+
+                // Subtract the colas you have by realItemPrice[j]
+                MainPanel.PlayerCola = MainPanel.PlayerCola.subtract(realItemPrice[j]);
+                
                 // Add the item number by currentfactorInt
                 itemNumber[j] += currentfactorInt;
 
-                // set the next itemPrice
-                displayItemPrice[j] = (int)((double)InitialItemPrice[j] * Math.pow(IncreaseRate, (double)itemNumber[j]));
+                // Calculate and Set the next consumption
+                realItemPrice[j] = calPrice(InitialItemPrice[j], itemNumber[j] + currentfactorInt - 1).subtract(calPrice(InitialItemPrice[j], itemNumber[j] - 1));
 
-                // Update the JLabel text
+                // set the display itemPrice
+                displayItemPrice[j] = simplifyNumber(realItemPrice[j]);
+
+                // set JLabel text
                 JLabel labelInButton = (JLabel) buttons[j].getComponent(0);
+                labelInButton.setText(String.valueOf(currentfactorInt) + ", " + displayItemPrice[j] + ", " + String.valueOf(itemNumber[j]));
 
-                labelInButton.setText(String.valueOf(currentfactorInt) + ", " + String.valueOf(displayItemPrice[j]) + ", " + String.valueOf(itemNumber[j]));
+                // Update the points
+                MainPanel.UpdatePoints();
+                MainPanel.UpdateAutoValue();
             });
         }
+    }
+
+    static BigInteger calPrice(int x, int y){
+        if(y < 0)
+            return BigInteger.valueOf(0);
+
+        return (
+                    BigDecimal.valueOf(1.0 / 3).multiply(
+                        BigDecimal.valueOf(-20).add(
+                            BigDecimal.valueOf(20).pow(
+                                -y, MathContext.DECIMAL64
+                            ).multiply(
+                                BigDecimal.valueOf(23).pow(1 + y, MathContext.DECIMAL64)
+                            )
+                        )
+                    ).multiply(BigDecimal.valueOf(x))
+                ).setScale(0, RoundingMode.HALF_UP).toBigInteger();
+    }
+
+    public static String simplifyNumber(BigInteger b){
+        String str = b.toString(), result = "";
+        int len = str.length();
+        int myUnits = (len - 1) / 3;
+        int first = (len % 3 == 0)? 3: len % 3;
+
+        if(myUnits < 1){
+            result = str;
+        }else if(myUnits < 2){
+            result = str.substring(0, first) + "," + str.substring(first);
+        }else if(myUnits < 5){
+            result = str.substring(0, first) + "." + str.substring(first, first + 1) + MainPanel.units[myUnits];
+        }else{
+            myUnits -= 5;
+            String firstUnit = (myUnits / 26 == 0)? "" : Character.toString('a' + myUnits / 26 - 1);
+            String secondUnit = Character.toString('a' + myUnits % 26);
+            result = str.substring(0, first) + "." + str.substring(first, first + 1) + firstUnit + secondUnit;
+        }
+
+        return result;
     }
 }

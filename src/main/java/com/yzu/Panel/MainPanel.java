@@ -1,13 +1,19 @@
 package com.yzu.Panel;
 
 import javax.swing.*;
+
+import com.yzu.objects.PointsText;
+
 import java.awt.BorderLayout;
+import java.math.*;
+import java.util.TimerTask;
+import java.util.Timer;
+import java.util.Date;
 
 public class MainPanel extends JFrame {
-    public static final String units[] = {"", "", ",", "M", "G", "T"};
-    public static int totalPoints[] = new int[101]; // each element is in the range 0-999 start form [1 ~ 101]
-    public static int totalPointsSize = 1; // save the points size
-    public static int AutoClickValue = 0;
+    public static final String units[] = {"", "", "M", "G", "T"};
+    public static BigInteger PlayerCola = new BigInteger("15000");
+    public static BigInteger AutoClickValue = new BigInteger("0");
     public static JPanel lp;
     public static JPanel cp;
     public static JPanel rp;
@@ -40,8 +46,40 @@ public class MainPanel extends JFrame {
         add(cp);
         add(rp);
 
+        // create a timer
+        Timer timer = new Timer();
+
+        // create a task to be executed by the timer
+        TimerTask task = new TimerTask() {
+            public void run() {
+                PlayerCola = PlayerCola.add(AutoClickValue);
+                UpdatePoints();
+            }
+        };
+
+        // Schedule the task to run every 0.05 seconds starting from the current time
+        Date startTime = new Date();
+        timer.schedule(task, startTime, 1000);
+
         // set the frame to fixed resizable and visible
         setResizable(true);
         setVisible(true);
+    }
+
+    public static void UpdateAutoValue() {
+        AutoClickValue = BigInteger.ZERO;
+        for(int i = 1; i < 10; i++) {
+            AutoClickValue = AutoClickValue.add(
+                                BigInteger.valueOf(RightPanel.ItemAutoClickValue[i]).multiply(
+                                    BigInteger.valueOf(RightPanel.itemNumber[i])
+                                )
+                            );
+        }
+
+        PointsText.UpdateAutoPointsText();
+    }
+
+    public static void UpdatePoints() {
+        PointsText.UpdatePointsText();
     }
 }

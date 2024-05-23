@@ -4,6 +4,7 @@ import com.yzu.Panel.MainPanel;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -37,19 +38,8 @@ public class Cola extends JPanel{
             }
        
             public void mouseClicked(MouseEvent e) {
-                MainPanel.totalPoints[1]++;
-                //MainPanel.totalPoints[1] += MainPanel.ClickValue;
-                if(MainPanel.totalPoints[1] > 999){
-                    int i = 1;
-                    while(MainPanel.totalPoints[i] > 999){
-                        if(MainPanel.totalPointsSize < i + 1)
-                            MainPanel.totalPointsSize = i + 1;
-                        MainPanel.totalPoints[i + 1] += MainPanel.totalPoints[i] / 1000;
-                        MainPanel.totalPoints[i] %= 1000;
-                        i++;
-                    }
-                }
-                PointsText.UpdatePoints();
+                MainPanel.PlayerCola = MainPanel.PlayerCola.add(BigInteger.ONE);
+                PointsText.UpdatePointsText();
                 ZoomImg(100);
             }
         });

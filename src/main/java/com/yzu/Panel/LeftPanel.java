@@ -11,6 +11,8 @@ public class LeftPanel extends JPanel {
     public LeftPanel(MainPanel w) {
         this.window = w;
 
+        setLayout(null);
+        
         // the magnification of area and set size
         float widthMag = 0.33f;
         setSize((int)(window.getWidth() * widthMag), window.getHeight());
@@ -20,8 +22,7 @@ public class LeftPanel extends JPanel {
 
         JPanel Points = new PointsText(this);
         add(Points);
- 
-        setLayout(null);
+
         setBackground(Color.RED);
     }
 }
