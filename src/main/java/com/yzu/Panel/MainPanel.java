@@ -9,6 +9,7 @@ import java.math.*;
 import java.util.TimerTask;
 import java.util.Timer;
 import java.util.Date;
+import java.awt.Insets;
 
 public class MainPanel extends JFrame {
     public static final String units[] = {"", "", "M", "G", "T"};
@@ -17,6 +18,7 @@ public class MainPanel extends JFrame {
     public static JPanel lp;
     public static JPanel cp;
     public static JPanel rp;
+    public static Insets ins;
 
     public MainPanel() {
         // set JFrame title
@@ -30,6 +32,11 @@ public class MainPanel extends JFrame {
         // set JFrame size and display it in the center of the screen
         setSize(1280, 720);
         setLocationRelativeTo(null);
+
+        // get the Insets of the frame
+        setVisible(true);
+        ins = getInsets();
+        setVisible(false);
 
         // set the Point in saving File
         /*totalPoints[5] = 863;
@@ -64,6 +71,8 @@ public class MainPanel extends JFrame {
         // set the frame to fixed resizable and visible
         setResizable(true);
         setVisible(true);
+
+        System.out.println("Insets: " + ins);
     }
 
     public static void UpdateAutoValue() {

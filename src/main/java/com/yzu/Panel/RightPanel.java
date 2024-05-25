@@ -1,7 +1,6 @@
 package com.yzu.Panel;
 
 import javax.imageio.ImageIO;
-import javax.naming.InitialContext;
 import javax.swing.*;
 
 import java.awt.BorderLayout;
@@ -51,13 +50,12 @@ public class RightPanel extends JPanel {
 
     public RightPanel(MainPanel w) {
         this.window = w;
-
+        
         // set area
-        int sizeAdjustment = 0;
-        setSize(window.getWidth() - window.cp.getWidth() + sizeAdjustment, window.getHeight());
+        setSize(window.getWidth() - MainPanel.cp.getWidth() - (MainPanel.ins.left + MainPanel.ins.right), window.getHeight());
 
         // Get the range of panelRight
-        int x = window.cp.getWidth();
+        int x = MainPanel.cp.getWidth();
         int width = getWidth();
         int height = getHeight();
 
@@ -105,7 +103,7 @@ public class RightPanel extends JPanel {
                         
                         // Calculate the real price of each item and simplify the number to display
                         for(int m = 1; m < 10; m++){
-                            realItemPrice[m] = calPrice(InitialItemPrice[m], itemNumber[m] + factorList[k] - 1).subtract(calPrice(InitialItemPrice[m], itemNumber[k] - 1));
+                            realItemPrice[m] = calPrice(InitialItemPrice[m], itemNumber[m] + factorList[k] - 1).subtract(calPrice(InitialItemPrice[m], itemNumber[m] - 1));
                             displayItemPrice[m] = simplifyNumber(realItemPrice[m]);
                         }
                         // set the simplified number to the label
@@ -197,10 +195,11 @@ public class RightPanel extends JPanel {
                 // Update the points
                 MainPanel.UpdatePoints();
                 MainPanel.UpdateAutoValue();
-            });
+            }); 
         }
     }
 
+    // x: initial price, y: amount of items
     static BigInteger calPrice(int x, int y){
         if(y < 0)
             return BigInteger.valueOf(0);
@@ -216,6 +215,24 @@ public class RightPanel extends JPanel {
                         )
                     ).multiply(BigDecimal.valueOf(x))
                 ).setScale(0, RoundingMode.HALF_UP).toBigInteger();
+    }
+
+    // x: initial price, y: amount of items
+    static BigDecimal calPrice(float x, int y){
+        if(y < 0)
+            return BigDecimal.valueOf(0);
+
+        return (
+                    BigDecimal.valueOf(1.0 / 3).multiply(
+                        BigDecimal.valueOf(-20).add(
+                            BigDecimal.valueOf(20).pow(
+                                -y, MathContext.DECIMAL64
+                            ).multiply(
+                                BigDecimal.valueOf(23).pow(1 + y, MathContext.DECIMAL64)
+                            )
+                        )
+                    ).multiply(BigDecimal.valueOf(x))
+                ).setScale(3, RoundingMode.HALF_UP);
     }
 
     public static String simplifyNumber(BigInteger b){
