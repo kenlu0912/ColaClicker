@@ -5,6 +5,7 @@ import javax.swing.*;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -12,6 +13,8 @@ import java.io.IOException;
 import java.awt.Image;
 import java.awt.Font;
 import java.math.*;
+import java.util.TimerTask;
+import java.util.Timer;
 
 public class RightPanel extends JPanel {
     private MainPanel window;
@@ -44,6 +47,17 @@ public class RightPanel extends JPanel {
                                               "", 
                                               "", 
                                               "This is a joke. Just like you."};
+    public static String[] toolTipMsg = {"", 
+                                         "<html>This is the <b>item</b> 1</html>", 
+                                         "<html>This is the <b>item</b> 2</html>", 
+                                         "<html>This is the <b>item</b> 3</html>", 
+                                         "<html>This is the <b>item</b> 4</html>", 
+                                         "<html>This is the <b>item</b> 5</html>", 
+                                         "<html>This is the <b>item</b> 6</html>", 
+                                         "<html>This is the <b>item</b> 7</html>", 
+                                         "<html>This is the <b>item</b> 8</html>", 
+                                         "<html>This is the <b>item</b> 9</html>"};
+    
                         
     // Add ten button and separate vertically equally
     JButton[] buttons = new JButton[10];
@@ -63,7 +77,7 @@ public class RightPanel extends JPanel {
         setLayout(null);
 
         // Set the background color of panelRight
-        setBackground(Color.BLUE);
+        setBackground(Color.GRAY);
 
         // Add a label at the top of the panelRight
         JLabel label = new JLabel();
@@ -117,6 +131,24 @@ public class RightPanel extends JPanel {
                     }
                 }
             });
+
+            // Add hover effect
+            buttonsInLabel[j].addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    buttonsInLabel[j].setForeground(Color.YELLOW);
+                }
+
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    for (int k = 0; k < buttonsInLabel.length; k++) {
+                        if (currentfactor[k]) {
+                            buttonsInLabel[k].setForeground(Color.YELLOW);
+                        } else {
+                            buttonsInLabel[k].setForeground(Color.BLACK);
+                        
+                        }
+                    }
+                }
+            });
         }
 
 
@@ -126,6 +158,7 @@ public class RightPanel extends JPanel {
             buttons[i] = new JButton("Item Name");
             // cancel the focus border
             buttons[i].setFocusPainted(false);
+            buttons[i].setBorderPainted(false);
 
             // * the reference of two labels
             // * Set the layout manager for each button to BorderLayout
@@ -196,7 +229,52 @@ public class RightPanel extends JPanel {
                 MainPanel.UpdatePoints();
                 MainPanel.UpdateAutoValue();
             }); 
+
+            // Add hover effect
+            buttons[j].addMouseListener(new java.awt.event.MouseAdapter() {
+                Color originalColor = buttons[j].getBackground();
+
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    if (MainPanel.PlayerCola.compareTo(realItemPrice[j]) >= 0) {
+                        buttons[j].setBackground(Color.YELLOW);
+                        buttons[j].setOpaque(true);
+                    }
+                }
+
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    buttons[j].setBackground(originalColor);
+                    buttons[j].setOpaque(false);
+                }
+            });
+
+            // Add ToolTipText, which is 200*100 pixels
+            buttons[j].setToolTipText(toolTipMsg[j]);
+            UIManager.put("ToolTip.background", Color.ORANGE);
+            UIManager.put("ToolTip.foreground", Color.BLACK);
+            UIManager.put("ToolTip.font", new Font("Arial", Font.PLAIN, 14));
         }
+
+        // compare with MainPanel.PlayerCola every 1 second
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            public void run() {
+                for (int i = 1; i < 10; i++) {
+                    if (buttons[i].getBackground() == Color.YELLOW)
+                        continue;
+
+                    if (MainPanel.PlayerCola.compareTo(realItemPrice[i]) >= 0){
+                        buttons[i].setBackground(Color.GREEN);
+                        buttons[i].setOpaque(true);
+                    } else {
+                        buttons[i].setBackground(Color.GRAY);
+                    
+                    }
+                }
+            }
+        };
+
+        // Schedule the task to run every 1 second starting from the current time
+        timer.schedule(task, new java.util.Date(), 10);
     }
 
     // x: initial price, y: amount of items
