@@ -85,6 +85,19 @@ public class RightPanel extends JPanel {
                 }
                 System.out.println();
             });
+
+            // Add hover listener to each button
+            buttonsInLabel[j].addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    buttonsInLabel[j].setForeground(Color.YELLOW);
+                }
+
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    if (!currentfactor[j]) {
+                        buttonsInLabel[j].setForeground(Color.BLACK);
+                    }
+                }
+            });
         }
 
 
@@ -96,6 +109,7 @@ public class RightPanel extends JPanel {
             buttons[i] = new JButton("Item Name");
             // cancel the focus border
             buttons[i].setFocusPainted(false);
+            buttons[i].setBorderPainted(false);
 
             // * the reference of two labels
             // * Set the layout manager for each button to BorderLayout
@@ -154,6 +168,50 @@ public class RightPanel extends JPanel {
 
                 labelInButton.setText(String.valueOf(currentfactorInt) + ", " + String.valueOf(itemPrice[j]) + ", " + String.valueOf(itemNumber[j]));
             });
+
+            // Add hover listener to each button
+            buttons[j].addMouseListener(new java.awt.event.MouseAdapter() {
+                // Temp to store the current color
+                Color tempColor;
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    tempColor = buttons[j].getBackground();
+                    buttons[j].setBackground(Color.YELLOW);
+                    buttons[j].setOpaque(true);
+                }
+
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    buttons[j].setBackground(tempColor);
+                    buttons[j].setOpaque(true);
+                }
+            });
+
+            String []clickMsg = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7", "Item 8", "Item 9", "Item 10"};
+            // When right click the button
+            buttons[j].addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    if (evt.getButton() == 3) {
+                        // Jump a pop-up window
+                        JOptionPane.showMessageDialog(null, clickMsg[j]);
+
+                        // Stop all program until the pop-up window is closed
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+
+            int money = -1;
+            // Change bgc if the money is larger than the itemPrice
+            if (money >= itemPrice[j]) {
+                buttons[j].setBackground(Color.GREEN);
+                buttons[j].setOpaque(true);
+            } else {
+                buttons[j].setBackground(Color.GRAY);
+                buttons[j].setOpaque(true);
+            }
         }
     }
 }
