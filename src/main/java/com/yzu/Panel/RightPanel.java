@@ -126,6 +126,7 @@ public class RightPanel extends JPanel {
             buttons[i] = new JButton("Item Name");
             // cancel the focus border
             buttons[i].setFocusPainted(false);
+            buttons[i].setBorderPainted(false);
 
             // * the reference of two labels
             // * Set the layout manager for each button to BorderLayout
