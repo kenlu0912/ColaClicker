@@ -15,7 +15,7 @@ public class LeftPanel extends JPanel {
         
         // the magnification of area and set size
         float widthMag = 0.33f;
-        setSize((int)(window.getWidth() * widthMag), window.getHeight());
+        setSize((int)((window.getWidth()) * widthMag), window.getHeight());
 
         JPanel ColaPanel = new Cola(this);
         add(ColaPanel);
