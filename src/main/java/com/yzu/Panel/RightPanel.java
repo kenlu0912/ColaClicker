@@ -209,6 +209,9 @@ public class RightPanel extends JPanel {
                 if(MainPanel.PlayerCola.compareTo(realItemPrice[j]) < 0)
                     return;
 
+                // Add CenterPanel buy times for achievement
+                CenterPanel.buyTime++;
+
                 // Subtract the colas you have by realItemPrice[j]
                 MainPanel.PlayerCola = MainPanel.PlayerCola.subtract(realItemPrice[j]);
                 
