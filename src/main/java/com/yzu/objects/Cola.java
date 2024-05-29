@@ -1,4 +1,5 @@
 package com.yzu.objects;
+import com.yzu.Panel.CenterPanel;
 import com.yzu.Panel.LeftPanel;
 import com.yzu.Panel.MainPanel;
 
@@ -38,6 +39,7 @@ public class Cola extends JPanel{
             }
        
             public void mouseClicked(MouseEvent e) {
+                CenterPanel.clickTime++;
                 MainPanel.PlayerCola = MainPanel.PlayerCola.add(BigInteger.ONE);
                 PointsText.UpdatePointsText();
                 ZoomImg(100);
