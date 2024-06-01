@@ -2,6 +2,7 @@ package com.yzu.Panel;
 
 import javax.swing.*;
 
+import com.yzu.objects.Pepsi;
 import com.yzu.objects.PointsText;
 
 import java.awt.Color;
@@ -115,11 +116,11 @@ public class CenterPanel extends JPanel {
                                 e.printStackTrace();
                             }
                         }
-                        // if (MainPanel.PlayerCola >= 1000000 && !achieve[3]) {
-                        //     achieve[3] = true;
-                        //     label.setForeground(Color.RED);
-                        //     effect.setForeground(Color.RED);
-                        // }
+                        if (Pepsi.getClicked() == true && !achieve[4]) {
+                            achieve[4] = true;
+                            TitleLabel[4].setText("<html><s>" + achieveStrings[4] + "</s></html>");
+                            EffectLabel[4].setText("<html><s>" + effectsString[4] + "</s></html>");
+                        }
                     }
                 }
             }).start();
