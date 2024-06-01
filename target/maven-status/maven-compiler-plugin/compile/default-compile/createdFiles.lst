@@ -11,5 +11,7 @@ com/yzu/objects/PointsText.class
 com/yzu/Panel/AchievePanel.class
 com/yzu/objects/Cola.class
 com/yzu/Panel/LeftPanel.class
+com/yzu/objects/Pepsi$1.class
+com/yzu/objects/Pepsi.class
 com/yzu/Panel/MainPanel$1.class
 com/yzu/Panel/RightPanel$2.class

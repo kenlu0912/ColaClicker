@@ -22,7 +22,7 @@ public class MainPanel extends JFrame {
 
     public MainPanel() {
         // set JFrame title
-        setTitle("The Game of Life");
+        setTitle("Cola Clicker");
         // set layout
         setLayout(new BorderLayout());
 

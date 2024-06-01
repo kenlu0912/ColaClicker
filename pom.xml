@@ -5,10 +5,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.yzu</groupId>
-  <artifactId>java_game_project</artifactId>
+  <artifactId>ColaClicker</artifactId>
   <version>1.0</version>
 
-  <name>java_game_project</name>
+  <name>ColaClicker</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
