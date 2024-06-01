@@ -13,20 +13,23 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import java.awt.event.*;
 
-public class Cola extends JPanel{
+public class Pepsi extends JPanel{
     private LeftPanel ColaWindow;
     private BufferedImage ColaImg = null;
     private int ImgWidth = 0;
     private int ImgHeight = 0;
     private int g2dW = 0;
     private int g2dH = 0;
-    private final float mag = 0.3f;
+    private final float mag = 0.1f;
+    public static boolean clickedPepsi = false;
 
-    public Cola(LeftPanel w) {
+    public Pepsi() {}
+
+    public Pepsi(LeftPanel w) {
         this.ColaWindow = w;
 
         try {
-            ColaImg = ImageIO.read(new File("src/main/resources/img/cola.png"));
+            ColaImg = ImageIO.read(new File("src/main/resources/img/pepsi.png"));
             ImgWidth = g2dW = (int)(ColaImg.getWidth() * mag);
             ImgHeight = g2dH = (int)(ColaImg.getHeight() * mag);
         } catch (IOException ex) {
@@ -34,23 +37,17 @@ public class Cola extends JPanel{
         }
 
         addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
-                ZoomImg(95);
-            }
-       
             public void mouseClicked(MouseEvent e) {
-                CenterPanel.clickTime++;
-                if (MainPanel.PlayerCola.compareTo(new BigInteger("1000000")) == -1) {
-                    MainPanel.PlayerCola = MainPanel.PlayerCola.add(new BigInteger("1"));
-                } else {
-                    MainPanel.PlayerCola = MainPanel.PlayerCola.add(MainPanel.AutoClickValue.divide(new BigInteger("100")));
+                if (clickedPepsi == false) {
+                    MainPanel.PlayerCola = MainPanel.PlayerCola.add(new BigInteger("1000000"));
+                    setBounds(0, 0, 0, 0);
+                    MainPanel.UpdatePoints();
+                    clickedPepsi = true;
                 }
-                PointsText.UpdatePointsText();
-                ZoomImg(100);
             }
         });
 
-        setBounds(ColaWindow.getWidth() / 2 - ImgWidth / 2, ColaWindow.getHeight() / 2 - ImgHeight / 2, ImgWidth, ImgHeight);
+        setBounds(0, 600, ImgWidth, ImgHeight);
         setBackground(null);
     }
 
@@ -61,10 +58,7 @@ public class Cola extends JPanel{
             g2d.drawImage(ColaImg, 0, 0, g2dW, g2dH, this);
     }
 
-    private void ZoomImg(int zoomLevel) {
-        //zoom in the picture
-        g2dW = (int)(ImgWidth * (float)zoomLevel / 100);
-        g2dH = (int)(ImgHeight * (float)zoomLevel / 100);
-        setBounds(ColaWindow.getWidth() / 2 - g2dW / 2, ColaWindow.getHeight() / 2 - g2dH / 2, g2dW, g2dH);
+    static public boolean getClicked() {
+        return clickedPepsi;
     }
 }

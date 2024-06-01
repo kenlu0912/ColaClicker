@@ -1,9 +1,14 @@
 package com.yzu.Panel;
 
 import javax.swing.*;
+
+import com.yzu.objects.Pepsi;
+import com.yzu.objects.PointsText;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Label;
+import java.awt.Point;
 import java.math.BigInteger;
 
 class AchievePanel extends JPanel {
@@ -13,25 +18,26 @@ class AchievePanel extends JPanel {
 }
 
 public class CenterPanel extends JPanel {
-    private final BigInteger achieveOne = new BigInteger("15001");
+    private final BigInteger achieveOne = new BigInteger("50000");
     public static int clickTime = 0;
     public static int buyTime = 0;
 
     private MainPanel window;
     private AchievePanel[] achievePanel;
-    private JLabel[] TitleLabel = new JLabel[4];
-    private JLabel[] EffectLabel = new JLabel[4];
+    private JLabel[] TitleLabel = new JLabel[5];
+    private JLabel[] EffectLabel = new JLabel[5];
 
-    public static boolean[] achieve = {false, false, false, false};
-    private Color[] colors = {Color.WHITE, Color.RED, Color.GREEN, Color.BLUE};
-    private String[] achieveStrings = {"Earn 50000 Gallon Cola",
+    public static boolean[] achieve = {false, false, false, false, false};
+    private String[] achieveStrings = {"",
+                                       "Earn 50000 Cola",
                                        "Click 1000 Times",
                                        "Buy 10 Items",
-                                       "Earn 1000000 Points"};
-    private String[] effectsString = {"+1 Gallon Cola",
-                                      "+1 Click",
-                                      "+1 Item",
-                                      "+1 Point"};
+                                       "Find the Pepsi"};
+    private String[] effectsString = {"",
+                                      "After earning 50000 Cola, you will get 10000 Cola!",
+                                      "After clicking 1000 times, you can get 1000 Cola per second!",
+                                      "After buying 10 items, you can get a free item!",
+                                      "Great! You find the Pepsi! You can get 1000000 Cola!"};
 
     public CenterPanel(MainPanel w) {
         this.window = w;
@@ -42,26 +48,34 @@ public class CenterPanel extends JPanel {
         //setBounds(window.lp.getX() + window.lp.getWidth(), 0, window.getWidth() * 4 / 10, window.getHeight());
         setBackground(Color.GREEN);
 
-        // Slice the panel into 4 parts
+        // Slice the panel into 5 parts
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        achievePanel = new AchievePanel[4];
-        for (int i = 0; i < 4; i++) {
+        achievePanel = new AchievePanel[5];
+        for (int i = 0; i < 5; i++) {
             achievePanel[i] = new AchievePanel();
             achievePanel[i].setLayout(null);
-            achievePanel[i].setBounds(0, i * getHeight() / 4, getWidth(), getHeight() / 4);
-            achievePanel[i].setBackground(colors[i]);
-        
-            TitleLabel[i] = new JLabel(achieveStrings[i]);
-            // TitleLabel[i].setBorder(BorderFactory.createLineBorder(Color.YELLOW, 5));
-            TitleLabel[i].setBounds(422, 0, 538, getHeight() / 4 - 120);
-            TitleLabel[i].setFont(new Font("Arial", Font.PLAIN, 20));
-            achievePanel[i].add(TitleLabel[i]);
+            achievePanel[i].setBounds(0, i * getHeight() / 5, getWidth(), getHeight() / 5);
+            achievePanel[i].setBackground(Color.decode("#09c8f6"));
 
-            EffectLabel[i] = new JLabel(effectsString[i]);
-            // EffectLabel[i].setBorder(BorderFactory.createLineBorder(Color.YELLOW, 5));
-            EffectLabel[i].setBounds(422 + 40, 0, 538, getHeight() / 4 - 20);
-            EffectLabel[i].setFont(new Font("Arial", Font.PLAIN, 16));
-            achievePanel[i].add(EffectLabel[i]);
+            if (i == 0) {
+                TitleLabel[i] = new JLabel("<html><h1>Achievements</h1></html>", SwingConstants.CENTER);
+                TitleLabel[i].setBounds(422, 50, 538, getHeight() / 5 - 120);
+                // TitleLabel[i].set
+                // TitleLabel[i].setFont(new Font("Arial", Font.PLAIN, 20));
+                achievePanel[i].add(TitleLabel[i]);
+            } else {
+                TitleLabel[i] = new JLabel(achieveStrings[i]);
+                // TitleLabel[i].setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
+                TitleLabel[i].setBounds(422, 0, 538, getHeight() / 5 - 120);
+                TitleLabel[i].setFont(new Font("Arial", Font.PLAIN, 20));
+                achievePanel[i].add(TitleLabel[i]);
+
+                EffectLabel[i] = new JLabel("<html><p>" + effectsString[i] + "</p></html>");
+                // EffectLabel[i].setBorder(BorderFactory.createLineBorder(Color.YELLOW, 5));
+                EffectLabel[i].setBounds(422 + 40, 0, 538, getHeight() / 5 - 20);
+                EffectLabel[i].setFont(new Font("Arial", Font.PLAIN, 16));
+                achievePanel[i].add(EffectLabel[i]);
+            }
 
             add(achievePanel[i]);
 
@@ -74,27 +88,39 @@ public class CenterPanel extends JPanel {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        if (MainPanel.PlayerCola.compareTo(achieveOne) == 1 && !achieve[0]) {
+                        if (MainPanel.PlayerCola.compareTo(achieveOne) == 1 && !achieve[1]) {
                             System.out.println("PlayerCola: " + MainPanel.PlayerCola);
-                            achieve[0] = true;
-                            TitleLabel[0].setForeground(Color.RED);
-                            EffectLabel[0].setForeground(Color.RED);
-                        }
-                        if (clickTime >= 2 && !achieve[1]) {
                             achieve[1] = true;
-                            TitleLabel[1].setForeground(Color.RED);
-                            EffectLabel[1].setForeground(Color.RED);
+                            TitleLabel[1].setText("<html><s>" + achieveStrings[1] + "</s></html>");
+                            EffectLabel[1].setText("<html><s>" + effectsString[1] + "</s></html>");
+
+                            MainPanel.PlayerCola = MainPanel.PlayerCola.add(BigInteger.valueOf(10000));
                         }
-                        if (buyTime >= 2 && !achieve[2]) {
+                        if (clickTime >= 10 && !achieve[2]) {
                             achieve[2] = true;
-                            TitleLabel[2].setForeground(Color.RED);
-                            EffectLabel[2].setForeground(Color.RED);
+                            TitleLabel[2].setText("<html><s>" + achieveStrings[2] + "</s></html>");
+                            EffectLabel[2].setText("<html><s>" + effectsString[2] + "</s></html>");
+
+                            MainPanel.AutoClickValue = MainPanel.AutoClickValue.add(BigInteger.valueOf(1000));
+                            PointsText.UpdateAutoPointsText();
                         }
-                        // if (MainPanel.PlayerCola >= 1000000 && !achieve[3]) {
-                        //     achieve[3] = true;
-                        //     label.setForeground(Color.RED);
-                        //     effect.setForeground(Color.RED);
-                        // }
+                        if (buyTime >= 10 && !achieve[3]) {
+                            achieve[3] = true;
+                            TitleLabel[3].setText("<html><s>" + achieveStrings[3] + "</s></html>");
+                            EffectLabel[3].setText("<html><s>" + effectsString[3] + "</s></html>");
+
+                            RightPanel.buyAllItems();
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if (Pepsi.getClicked() == true && !achieve[4]) {
+                            achieve[4] = true;
+                            TitleLabel[4].setText("<html><s>" + achieveStrings[4] + "</s></html>");
+                            EffectLabel[4].setText("<html><s>" + effectsString[4] + "</s></html>");
+                        }
                     }
                 }
             }).start();

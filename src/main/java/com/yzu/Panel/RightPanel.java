@@ -24,9 +24,9 @@ public class RightPanel extends JPanel {
 
     // An array to initial the first item price
     // name: X, X, X, X, X, X, X, X, X, Joke
-    private static int[] InitialItemPrice = {0, 15, 100, 500, 3000, 10000, 40000, 200000, 1666666, 0};
+    private static int[] InitialItemPrice = {0, 15, 100, 500, 3000, 10000, 40000, 200000, 1666666, 10000000};
     
-    public static final int[] ItemAutoClickValue = {0, 1, 5, 20, 50, 100, 500, 3500, 8888, 123456, 0};
+    public static final int[] ItemAutoClickValue = {0, 1, 5, 20, 100, 500, 3500, 8888, 123456, 500000};
     
     // formula: InitialPrice * (IncRate ^ itemAvailable) = "next" item price
     // private static double IncreaseRate = 1.15f;
@@ -36,31 +36,42 @@ public class RightPanel extends JPanel {
     public static BigInteger[] realItemPrice = new BigInteger[10];
     // An array to store the item cliked times
     public static int[] itemClickedTimes = new int[10];
-    public static String[] itemName = {"", "", "", "", "", "", "", "", "", "Joke"};
+    public static String[] itemName = {"",
+                                      "Factory", 
+                                      "Hen House", 
+                                      "Bank", 
+                                      "Mine", 
+                                      "Temple", 
+                                      "Shipment", 
+                                      "Farm", 
+                                      "Lab",
+                                      "Nuclear Power Plant"};
     public static String[] itemDiscription = {"", 
-                                              "", 
-                                              "", 
-                                              "", 
-                                              "", 
-                                              "", 
-                                              "", 
-                                              "", 
-                                              "", 
-                                              "This is a joke. Just like you."};
-    public static String[] toolTipMsg = {"", 
-                                         "<html>This is the <b>item</b> 1</html>", 
-                                         "<html>This is the <b>item</b> 2</html>", 
-                                         "<html>This is the <b>item</b> 3</html>", 
-                                         "<html>This is the <b>item</b> 4</html>", 
-                                         "<html>This is the <b>item</b> 5</html>", 
-                                         "<html>This is the <b>item</b> 6</html>", 
-                                         "<html>This is the <b>item</b> 7</html>", 
-                                         "<html>This is the <b>item</b> 8</html>", 
-                                         "<html>This is the <b>item</b> 9</html>"};
+                                              "<html>This is <b>Factory</b></html>", 
+                                              "<html>This is <b>Hen House</b></html>", 
+                                              "<html>This is <b>Bank</b></html>", 
+                                              "<html>This is <b>Mine</b></html>", 
+                                              "<html>This is <b>Temple</b></html>", 
+                                              "<html>This is <b>Shipment</b></html>", 
+                                              "<html>This is <b>Farm</b></html>", 
+                                              "<html>This is <b>Lab</b></html>", 
+                                              "<html>This is <b>Nuclear Power Plant</b></html>"};
+    private final String[] imgPath = {"",
+                                      "src/main/resources/img/factory.png",
+                                      "src/main/resources/img/hen_house.png",
+                                      "src/main/resources/img/bank.png",
+                                      "src/main/resources/img/mine.png",
+                                      "src/main/resources/img/temple.png",
+                                      "src/main/resources/img/shipment.png",
+                                      "src/main/resources/img/farm.png",
+                                      "src/main/resources/img/lab.png",
+                                      "src/main/resources/img/nuclear.png"};
     
                         
     // Add ten button and separate vertically equally
-    JButton[] buttons = new JButton[10];
+    static JButton[] buttons = new JButton[10];
+    static boolean []currentfactor = {true, false, false, false};
+    static int []factorList = {1, 10, 100, 1000};
 
     public RightPanel(MainPanel w) {
         this.window = w;
@@ -86,9 +97,9 @@ public class RightPanel extends JPanel {
 
         // Add four buttons into label
         JButton[] buttonsInLabel = new JButton[4];
-        int []factorList = {1, 10, 100, 1000};
+        
         // which factor is selected
-        boolean []currentfactor = {true, false, false, false};
+        
         for (int i = 0; i < buttonsInLabel.length; i++) {
             // Change factorList[i] to a string
             buttonsInLabel[i] = new JButton(String.valueOf(factorList[i]));
@@ -123,7 +134,7 @@ public class RightPanel extends JPanel {
                         // set the simplified number to the label
                         for(int m = 1; m < 10; m++){
                             JLabel labelInButton = (JLabel) buttons[m].getComponent(0);
-                            labelInButton.setText(String.valueOf(factorList[k]) + ", " + displayItemPrice[m] + ", " + String.valueOf(itemNumber[m]));
+                            labelInButton.setText(displayItemPrice[m] + ", " + String.valueOf(itemNumber[m]));
                         }
                     } else {
                         currentfactor[k] = false;
@@ -155,7 +166,7 @@ public class RightPanel extends JPanel {
         add(label);
 
         for (int i = 1; i < buttons.length; i++) {
-            buttons[i] = new JButton("Item Name");
+            buttons[i] = new JButton(itemName[i]);
             // cancel the focus border
             buttons[i].setFocusPainted(false);
             buttons[i].setBorderPainted(false);
@@ -175,7 +186,7 @@ public class RightPanel extends JPanel {
 
             try {
                 Image img = ImageIO
-                        .read(new File("src/main/resources/img/factory.png"));
+                        .read(new File(imgPath[i]));
                 // Scale the image to fit the button which width is 1/4 of the frame width
                 img = img.getScaledInstance(width / 4, height / buttons.length - 3, Image.SCALE_SMOOTH);
                 // Let image align to the left of the button
@@ -191,7 +202,7 @@ public class RightPanel extends JPanel {
             itemNumber[i] = 0;
             realItemPrice[i] = new BigInteger(Integer.toString(InitialItemPrice[i]));
             displayItemPrice[i] = simplifyNumber(realItemPrice[i]);
-            l.setText("1, " + displayItemPrice[i] + ", " + itemNumber[i]);
+            l.setText(displayItemPrice[i] + ", " + itemNumber[i]);
         }
 
         // Add action listener to each button
@@ -210,7 +221,7 @@ public class RightPanel extends JPanel {
                     return;
 
                 // Add CenterPanel buy times for achievement
-                CenterPanel.buyTime++;
+                CenterPanel.buyTime += currentfactorInt;
 
                 // Subtract the colas you have by realItemPrice[j]
                 MainPanel.PlayerCola = MainPanel.PlayerCola.subtract(realItemPrice[j]);
@@ -226,7 +237,7 @@ public class RightPanel extends JPanel {
 
                 // set JLabel text
                 JLabel labelInButton = (JLabel) buttons[j].getComponent(0);
-                labelInButton.setText(String.valueOf(currentfactorInt) + ", " + displayItemPrice[j] + ", " + String.valueOf(itemNumber[j]));
+                labelInButton.setText(displayItemPrice[j] + ", " + String.valueOf(itemNumber[j]));
 
                 // Update the points
                 MainPanel.UpdatePoints();
@@ -251,7 +262,7 @@ public class RightPanel extends JPanel {
             });
 
             // Add ToolTipText, which is 200*100 pixels
-            buttons[j].setToolTipText(toolTipMsg[j]);
+            buttons[j].setToolTipText(itemDiscription[j]);
             UIManager.put("ToolTip.background", Color.ORANGE);
             UIManager.put("ToolTip.foreground", Color.BLACK);
             UIManager.put("ToolTip.font", new Font("Arial", Font.PLAIN, 14));
@@ -262,15 +273,16 @@ public class RightPanel extends JPanel {
         TimerTask task = new TimerTask() {
             public void run() {
                 for (int i = 1; i < 10; i++) {
-                    if (buttons[i].getBackground() == Color.YELLOW)
+                    if (buttons[i].getBackground() == Color.YELLOW && MainPanel.PlayerCola.compareTo(realItemPrice[i]) >= 0)
                         continue;
 
                     if (MainPanel.PlayerCola.compareTo(realItemPrice[i]) >= 0){
                         buttons[i].setBackground(Color.GREEN);
                         buttons[i].setOpaque(true);
+                        buttons[i].setEnabled(true);
                     } else {
                         buttons[i].setBackground(Color.GRAY);
-                    
+                        buttons[i].setEnabled(false);
                     }
                 }
             }
@@ -336,5 +348,30 @@ public class RightPanel extends JPanel {
         }
 
         return result;
+    }
+
+    public static void buyAllItems() {
+        for (int i = 1; i < buttons.length; i++) {
+            int currentfactorInt = 0;
+            for (int k = 0; k < currentfactor.length; k++) {
+                if (currentfactor[k]) {
+                    currentfactorInt = factorList[k];
+                }
+            }
+
+            // Add the item number by currentfactorInt
+            itemNumber[i] += 1;
+
+            // set the display itemPrice
+            displayItemPrice[i] = simplifyNumber(realItemPrice[i]);
+
+            // set JLabel text
+            JLabel labelInButton = (JLabel) buttons[i].getComponent(0);
+            labelInButton.setText(displayItemPrice[i] + ", " + String.valueOf(itemNumber[i]));
+
+            // Update the points
+            MainPanel.UpdatePoints();
+            MainPanel.UpdateAutoValue();
+        }
     }
 }
