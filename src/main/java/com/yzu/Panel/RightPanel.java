@@ -45,7 +45,7 @@ public class RightPanel extends JPanel {
                                       "Shipment", 
                                       "Farm", 
                                       "Lab",
-                                      "Nuclear power plant"};
+                                      "Nuclear Power Plant"};
     public static String[] itemDiscription = {"", 
                                               "<html>This is <b>Factory</b></html>", 
                                               "<html>This is <b>Hen House</b></html>", 
@@ -55,7 +55,7 @@ public class RightPanel extends JPanel {
                                               "<html>This is <b>Shipment</b></html>", 
                                               "<html>This is <b>Farm</b></html>", 
                                               "<html>This is <b>Lab</b></html>", 
-                                              "<html>This is <b>Nuclear power plant</b></html>"};
+                                              "<html>This is <b>Nuclear Power Plant</b></html>"};
     private final String[] imgPath = {"",
                                       "src/main/resources/img/factory.png",
                                       "src/main/resources/img/hen_house.png",
