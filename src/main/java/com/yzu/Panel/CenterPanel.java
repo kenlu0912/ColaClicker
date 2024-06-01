@@ -27,11 +27,11 @@ public class CenterPanel extends JPanel {
     private String[] achieveStrings = {"Earn 50000 Gallon Cola",
                                        "Click 1000 Times",
                                        "Buy 10 Items",
-                                       "Earn 1000000 Points"};
-    private String[] effectsString = {"+1 Gallon Cola",
-                                      "+1 Click",
-                                      "+1 Item",
-                                      "+1 Point"};
+                                       "Find the Pepsi"};
+    private String[] effectsString = {"After earning 50000 Gallon Cola, you will get 10000 Cola!",
+                                      "After clicking 1000 times, you can get 1000 Gallon Cola per second!",
+                                      "After buying 10 items, you can get a free item!",
+                                      "Great! You find the Pepsi! You can get 1000000 Cola!"};
 
     public CenterPanel(MainPanel w) {
         this.window = w;

@@ -26,7 +26,7 @@ public class RightPanel extends JPanel {
     // name: X, X, X, X, X, X, X, X, X, Joke
     private static int[] InitialItemPrice = {0, 15, 100, 500, 3000, 10000, 40000, 200000, 1666666, 0};
     
-    public static final int[] ItemAutoClickValue = {0, 1, 5, 20, 50, 100, 500, 3500, 8888, 123456, 0};
+    public static final int[] ItemAutoClickValue = {0, 1, 5, 20, 100, 500, 3500, 8888, 123456, 0};
     
     // formula: InitialPrice * (IncRate ^ itemAvailable) = "next" item price
     // private static double IncreaseRate = 1.15f;
@@ -36,27 +36,36 @@ public class RightPanel extends JPanel {
     public static BigInteger[] realItemPrice = new BigInteger[10];
     // An array to store the item cliked times
     public static int[] itemClickedTimes = new int[10];
-    public static String[] itemName = {"", "", "", "", "", "", "", "", "", "Joke"};
+    public static String[] itemName = {"",
+                                      "Factory", 
+                                      "Hen House", 
+                                      "Bank", 
+                                      "Mine", 
+                                      "Temple", 
+                                      "Shipment", 
+                                      "Farm", 
+                                      "Lab",
+                                      "Joke"};
     public static String[] itemDiscription = {"", 
-                                              "", 
-                                              "", 
-                                              "", 
-                                              "", 
-                                              "", 
-                                              "", 
-                                              "", 
-                                              "", 
-                                              "This is a joke. Just like you."};
-    public static String[] toolTipMsg = {"", 
-                                         "<html>This is the <b>item</b> 1</html>", 
-                                         "<html>This is the <b>item</b> 2</html>", 
-                                         "<html>This is the <b>item</b> 3</html>", 
-                                         "<html>This is the <b>item</b> 4</html>", 
-                                         "<html>This is the <b>item</b> 5</html>", 
-                                         "<html>This is the <b>item</b> 6</html>", 
-                                         "<html>This is the <b>item</b> 7</html>", 
-                                         "<html>This is the <b>item</b> 8</html>", 
-                                         "<html>This is the <b>item</b> 9</html>"};
+                                              "<html>This is <b>Factory</b></html>", 
+                                              "<html>This is <b>Hen House</b></html>", 
+                                              "<html>This is <b>Bank</b></html>", 
+                                              "<html>This is <b>Mine</b></html>", 
+                                              "<html>This is <b>Temple</b></html>", 
+                                              "<html>This is <b>Shipment</b></html>", 
+                                              "<html>This is <b>Farm</b></html>", 
+                                              "<html>This is <b>Lab</b></html>", 
+                                              "<html>This is <b>Joke</b></html>"};
+    private final String[] imgPath = {"",
+                                      "src/main/resources/img/factory.png",
+                                      "src/main/resources/img/hen_house.png",
+                                      "src/main/resources/img/bank.png",
+                                      "src/main/resources/img/mine.png",
+                                      "src/main/resources/img/temple.png",
+                                      "src/main/resources/img/shipment.png",
+                                      "src/main/resources/img/farm.png",
+                                      "src/main/resources/img/lab.png",
+                                      "src/main/resources/img/factory.png"};
     
                         
     // Add ten button and separate vertically equally
@@ -155,7 +164,7 @@ public class RightPanel extends JPanel {
         add(label);
 
         for (int i = 1; i < buttons.length; i++) {
-            buttons[i] = new JButton("Item Name");
+            buttons[i] = new JButton(itemName[i]);
             // cancel the focus border
             buttons[i].setFocusPainted(false);
             buttons[i].setBorderPainted(false);
@@ -175,7 +184,7 @@ public class RightPanel extends JPanel {
 
             try {
                 Image img = ImageIO
-                        .read(new File("src/main/resources/img/factory.png"));
+                        .read(new File(imgPath[i]));
                 // Scale the image to fit the button which width is 1/4 of the frame width
                 img = img.getScaledInstance(width / 4, height / buttons.length - 3, Image.SCALE_SMOOTH);
                 // Let image align to the left of the button
@@ -251,7 +260,7 @@ public class RightPanel extends JPanel {
             });
 
             // Add ToolTipText, which is 200*100 pixels
-            buttons[j].setToolTipText(toolTipMsg[j]);
+            buttons[j].setToolTipText(itemDiscription[j]);
             UIManager.put("ToolTip.background", Color.ORANGE);
             UIManager.put("ToolTip.foreground", Color.BLACK);
             UIManager.put("ToolTip.font", new Font("Arial", Font.PLAIN, 14));
