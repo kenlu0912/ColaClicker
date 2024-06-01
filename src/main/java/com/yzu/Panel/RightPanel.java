@@ -273,7 +273,7 @@ public class RightPanel extends JPanel {
         TimerTask task = new TimerTask() {
             public void run() {
                 for (int i = 1; i < 10; i++) {
-                    if (buttons[i].getBackground() == Color.YELLOW)
+                    if (buttons[i].getBackground() == Color.YELLOW && MainPanel.PlayerCola.compareTo(realItemPrice[i]) >= 0)
                         continue;
 
                     if (MainPanel.PlayerCola.compareTo(realItemPrice[i]) >= 0){
