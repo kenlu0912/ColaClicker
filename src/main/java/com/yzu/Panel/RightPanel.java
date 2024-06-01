@@ -24,9 +24,9 @@ public class RightPanel extends JPanel {
 
     // An array to initial the first item price
     // name: X, X, X, X, X, X, X, X, X, Joke
-    private static int[] InitialItemPrice = {0, 15, 100, 500, 3000, 10000, 40000, 200000, 1666666, 0};
+    private static int[] InitialItemPrice = {0, 15, 100, 500, 3000, 10000, 40000, 200000, 1666666, 10000000};
     
-    public static final int[] ItemAutoClickValue = {0, 1, 5, 20, 100, 500, 3500, 8888, 123456, 0};
+    public static final int[] ItemAutoClickValue = {0, 1, 5, 20, 100, 500, 3500, 8888, 123456, 500000};
     
     // formula: InitialPrice * (IncRate ^ itemAvailable) = "next" item price
     // private static double IncreaseRate = 1.15f;
@@ -45,7 +45,7 @@ public class RightPanel extends JPanel {
                                       "Shipment", 
                                       "Farm", 
                                       "Lab",
-                                      "Joke"};
+                                      "Nuclear power plant"};
     public static String[] itemDiscription = {"", 
                                               "<html>This is <b>Factory</b></html>", 
                                               "<html>This is <b>Hen House</b></html>", 
@@ -55,7 +55,7 @@ public class RightPanel extends JPanel {
                                               "<html>This is <b>Shipment</b></html>", 
                                               "<html>This is <b>Farm</b></html>", 
                                               "<html>This is <b>Lab</b></html>", 
-                                              "<html>This is <b>Joke</b></html>"};
+                                              "<html>This is <b>Nuclear power plant</b></html>"};
     private final String[] imgPath = {"",
                                       "src/main/resources/img/factory.png",
                                       "src/main/resources/img/hen_house.png",
@@ -65,11 +65,13 @@ public class RightPanel extends JPanel {
                                       "src/main/resources/img/shipment.png",
                                       "src/main/resources/img/farm.png",
                                       "src/main/resources/img/lab.png",
-                                      "src/main/resources/img/factory.png"};
+                                      "src/main/resources/img/nuclear.png"};
     
                         
     // Add ten button and separate vertically equally
-    JButton[] buttons = new JButton[10];
+    static JButton[] buttons = new JButton[10];
+    static boolean []currentfactor = {true, false, false, false};
+    static int []factorList = {1, 10, 100, 1000};
 
     public RightPanel(MainPanel w) {
         this.window = w;
@@ -95,9 +97,9 @@ public class RightPanel extends JPanel {
 
         // Add four buttons into label
         JButton[] buttonsInLabel = new JButton[4];
-        int []factorList = {1, 10, 100, 1000};
+        
         // which factor is selected
-        boolean []currentfactor = {true, false, false, false};
+        
         for (int i = 0; i < buttonsInLabel.length; i++) {
             // Change factorList[i] to a string
             buttonsInLabel[i] = new JButton(String.valueOf(factorList[i]));
@@ -277,9 +279,10 @@ public class RightPanel extends JPanel {
                     if (MainPanel.PlayerCola.compareTo(realItemPrice[i]) >= 0){
                         buttons[i].setBackground(Color.GREEN);
                         buttons[i].setOpaque(true);
+                        buttons[i].setEnabled(true);
                     } else {
                         buttons[i].setBackground(Color.GRAY);
-                    
+                        buttons[i].setEnabled(false);
                     }
                 }
             }
@@ -345,5 +348,30 @@ public class RightPanel extends JPanel {
         }
 
         return result;
+    }
+
+    public static void buyAllItems() {
+        for (int i = 1; i < buttons.length; i++) {
+            int currentfactorInt = 0;
+            for (int k = 0; k < currentfactor.length; k++) {
+                if (currentfactor[k]) {
+                    currentfactorInt = factorList[k];
+                }
+            }
+
+            // Add the item number by currentfactorInt
+            itemNumber[i] += 1;
+
+            // set the display itemPrice
+            displayItemPrice[i] = simplifyNumber(realItemPrice[i]);
+
+            // set JLabel text
+            JLabel labelInButton = (JLabel) buttons[i].getComponent(0);
+            labelInButton.setText(String.valueOf(currentfactorInt) + ", " + displayItemPrice[i] + ", " + String.valueOf(itemNumber[i]));
+
+            // Update the points
+            MainPanel.UpdatePoints();
+            MainPanel.UpdateAutoValue();
+        }
     }
 }
