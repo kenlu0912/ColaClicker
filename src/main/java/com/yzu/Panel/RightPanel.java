@@ -134,7 +134,7 @@ public class RightPanel extends JPanel {
                         // set the simplified number to the label
                         for(int m = 1; m < 10; m++){
                             JLabel labelInButton = (JLabel) buttons[m].getComponent(0);
-                            labelInButton.setText(String.valueOf(factorList[k]) + ", " + displayItemPrice[m] + ", " + String.valueOf(itemNumber[m]));
+                            labelInButton.setText(displayItemPrice[m] + ", " + String.valueOf(itemNumber[m]));
                         }
                     } else {
                         currentfactor[k] = false;
@@ -202,7 +202,7 @@ public class RightPanel extends JPanel {
             itemNumber[i] = 0;
             realItemPrice[i] = new BigInteger(Integer.toString(InitialItemPrice[i]));
             displayItemPrice[i] = simplifyNumber(realItemPrice[i]);
-            l.setText("1, " + displayItemPrice[i] + ", " + itemNumber[i]);
+            l.setText(displayItemPrice[i] + ", " + itemNumber[i]);
         }
 
         // Add action listener to each button
@@ -221,7 +221,7 @@ public class RightPanel extends JPanel {
                     return;
 
                 // Add CenterPanel buy times for achievement
-                CenterPanel.buyTime++;
+                CenterPanel.buyTime += currentfactorInt;
 
                 // Subtract the colas you have by realItemPrice[j]
                 MainPanel.PlayerCola = MainPanel.PlayerCola.subtract(realItemPrice[j]);
@@ -237,7 +237,7 @@ public class RightPanel extends JPanel {
 
                 // set JLabel text
                 JLabel labelInButton = (JLabel) buttons[j].getComponent(0);
-                labelInButton.setText(String.valueOf(currentfactorInt) + ", " + displayItemPrice[j] + ", " + String.valueOf(itemNumber[j]));
+                labelInButton.setText(displayItemPrice[j] + ", " + String.valueOf(itemNumber[j]));
 
                 // Update the points
                 MainPanel.UpdatePoints();
@@ -367,7 +367,7 @@ public class RightPanel extends JPanel {
 
             // set JLabel text
             JLabel labelInButton = (JLabel) buttons[i].getComponent(0);
-            labelInButton.setText(String.valueOf(currentfactorInt) + ", " + displayItemPrice[i] + ", " + String.valueOf(itemNumber[i]));
+            labelInButton.setText(displayItemPrice[i] + ", " + String.valueOf(itemNumber[i]));
 
             // Update the points
             MainPanel.UpdatePoints();

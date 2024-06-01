@@ -40,7 +40,11 @@ public class Cola extends JPanel{
        
             public void mouseClicked(MouseEvent e) {
                 CenterPanel.clickTime++;
-                MainPanel.PlayerCola = MainPanel.PlayerCola.add(BigInteger.ONE);
+                if (MainPanel.PlayerCola.compareTo(new BigInteger("1000000")) == -1) {
+                    MainPanel.PlayerCola = MainPanel.PlayerCola.add(new BigInteger("1"));
+                } else {
+                    MainPanel.PlayerCola = MainPanel.PlayerCola.add(MainPanel.AutoClickValue.divide(new BigInteger("100")));
+                }
                 PointsText.UpdatePointsText();
                 ZoomImg(100);
             }
