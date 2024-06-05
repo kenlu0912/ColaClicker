@@ -13,7 +13,7 @@ import java.awt.Insets;
 
 public class MainPanel extends JFrame {
     public static final String units[] = {"", "", "M", "G", "T"};
-    public static BigInteger PlayerCola = new BigInteger("15000");
+    public static BigInteger PlayerCola = new BigInteger("0");
     public static BigInteger AutoClickValue = new BigInteger("0");
     public static JPanel lp;
     public static JPanel cp;
@@ -72,7 +72,7 @@ public class MainPanel extends JFrame {
         setResizable(true);
         setVisible(true);
 
-        System.out.println("Insets: " + ins);
+        // System.out.println("Insets: " + ins);
     }
 
     public static void UpdateAutoValue() {

@@ -89,7 +89,7 @@ public class CenterPanel extends JPanel {
                             e.printStackTrace();
                         }
                         if (MainPanel.PlayerCola.compareTo(achieveOne) == 1 && !achieve[1]) {
-                            System.out.println("PlayerCola: " + MainPanel.PlayerCola);
+                            // System.out.println("PlayerCola: " + MainPanel.PlayerCola);
                             achieve[1] = true;
                             TitleLabel[1].setText("<html><s>" + achieveStrings[1] + "</s></html>");
                             EffectLabel[1].setText("<html><s>" + effectsString[1] + "</s></html>");
